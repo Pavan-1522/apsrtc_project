@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bus Pass Recharge</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <style>
+    body {
+      background: #f8f9fa;
+      color: #333;
+      font-family: 'Poppins', sans-serif;
+    }
+    .navbar {
+    background-color: #dc3545; /* Red */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: white;
+    }
+
+    .navbar-brand img {
+    border-radius: 5px; /* Optional: Add rounded corners to the logo */
+    }
+
+    .navbar-nav .nav-link {
+    color: rgb(3, 2, 2);
+    font-size: 1rem;
+    transition: color 0.3s ease;
+    }
+
+    .navbar-nav .nav-link:hover {
+    color: #ffffff; /* Slightly lighter on hover */
+    }
+
+    .navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+    }
+    .container {
+      margin-top: 5rem;
+      background: #fff;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+    .btn-primary {
+      background: #dc3545; /* Red */
+      border: none;
+      transition: all 0.3s ease;
+    }
+    .btn-primary:hover {
+      background: #c82333; /* Darker Red */
+    }
+    .hidden {
+      display: none;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      color: #333;
+      margin-bottom: 1rem;
+    }
+    .card-body {
+      padding: 1.5rem;
+    }
+    .form-control {
+      background: #fff;
+      border: 1px solid #ddd;
+      color: #333;
+    }
+    .form-control::placeholder {
+      color: #999;
+    }
+    .form-control:focus {
+      background: #fff;
+      color: #333;
+      box-shadow: none;
+      border-color: #dc3545; /* Red */
+    }
+    .profile-photo {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .active-pass-message {
+      background: #f8d7da; /* Light Red */
+      padding: 1rem;
+      border-radius: 10px;
+      text-align: center;
+      margin-top: 1rem;
+      color: #721c24; /* Dark Red */
+    }
+    .footer {
+      background: #333;
+      color: #fff;
+      padding: 1rem 0;
+      text-align: center;
+      margin-top: 3rem;
+    }
+    .footer a {
+      color: #dc3545; /* Red */
+      text-decoration: none;
+    }
+    .footer a:hover {
+      color: #c82333; /* Darker Red */
+    }
+    .logo{
+        width: 50px;
+        height: 50px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <!-- Logo and Brand -->
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img src="http://2.bp.blogspot.com/-5nU72jKeZqc/UaRvvZViyPI/AAAAAAAABrM/TbmXeLuU9do/s1600/APSRTC-Logo.jpg" alt="logo" class="logo me-2">
+        APSRTC Bus Pass
+      </a>
+
+      <!-- Navbar Toggler for Mobile -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Navbar Links -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="card_ver.html">Card verification</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="recharge.html">recharge</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="fetch.html">Test Fetch</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="text-center mb-4">
+      <h1 class="display-4">🚌 Bus Pass Recharge</h1>
+      <p class="lead">Recharge your bus pass seamlessly and securely.</p>
+    </div>
+
+    <!-- User Form -->
+    <form id="userForm" class="mb-4">
+      <div class="mb-3">
+        <label for="uid" class="form-label">Enter UID:</label>
+        <input type="text" class="form-control" id="uid" placeholder="Enter your UID" required>
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Get Details</button>
+    </form>
+
+    <!-- User Details -->
+    <div id="userDetails" class="hidden">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">User Details</h5>
+          <img id="profilePhoto" src="" alt="Profile Photo" class="profile-photo mb-3">
+          <p><strong>Name:</strong> <span id="name"></span></p>
+          <p><strong>Email:</strong> <span id="email"></span></p>
+          <p><strong>Phone:</strong> <span id="phone"></span></p>
+          <p><strong>Route:</strong> <span id="route"></span></p>
+          <p><strong>Expiry Date:</strong> <span id="expiryDate"></span></p>
+          <p><strong>Status:</strong> <span id="status"></span></p>
+        </div>
+      </div>
+
+      <!-- Active Pass Message -->
+      <div id="activePassMessage" class="active-pass-message hidden">
+        <p>Your pass is already <strong>Active</strong>. Recharge is not required at this time.</p>
+      </div>
+
+      <!-- Recharge Section -->
+      <div id="rechargeSection" class="card hidden">
+        <div class="card-body">
+          <h5 class="card-title">Select Plan</h5>
+          <select id="plan" class="form-select mb-3">
+            <option value="300">1 Month - ₹300</option>
+            <option value="900">3 Months - ₹900</option>
+            <option value="1800">6 Months - ₹1800</option>
+          </select>
+          <button id="rechargeButton" class="btn btn-primary w-100">Recharge Now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Payment Success -->
+    <div id="paymentSuccess" class="hidden text-center">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">🎉 Payment Successful!</h2>
+          <p>Your pass has been recharged. Download the receipt below.</p>
+          <button id="downloadReceipt" class="btn btn-primary">Download Receipt</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2023 Bus Pass Recharge. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS and Popper.js -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+  <!-- Razorpay -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <!-- jsPDF for PDF generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <!-- Firebase Modular SDK -->
+  <script type="module">
+    // Import Firebase modules
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyA02GfjPGm1X8He9bLkrfkyBKWYgmMc98Q",
+      authDomain: "buspass-2025.firebaseapp.com",
+      projectId: "buspass-2025",
+      storageBucket: "buspass-2025.appspot.com",
+      messagingSenderId: "417197327685",
+      appId: "1:417197327685:web:42d2d9e773512f7ba1ea2c",
+      measurementId: "G-475C145WWK"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+
+    // DOM Elements
+    const userForm = document.getElementById('userForm');
+    const userDetails = document.getElementById('userDetails');
+    const paymentSuccess = document.getElementById('paymentSuccess');
+    const rechargeButton = document.getElementById('rechargeButton');
+    const downloadReceipt = document.getElementById('downloadReceipt');
+    const profilePhoto = document.getElementById('profilePhoto');
+    const activePassMessage = document.getElementById('activePassMessage');
+    const rechargeSection = document.getElementById('rechargeSection');
+
+    let userData = {};
+
+    // Fetch User Details
+    userForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const uid = document.getElementById('uid').value;
+
+      try {
+        const userRef = ref(database, `busPasses/${uid}`);
+        const snapshot = await get(userRef);
+        userData = snapshot.val();
+
+        if (userData) {
+          document.getElementById('name').textContent = userData.name;
+          document.getElementById('email').textContent = userData.email;
+          document.getElementById('phone').textContent = userData.phone;
+          document.getElementById('route').textContent = `${userData.from} to ${userData.to}`;
+          document.getElementById('expiryDate').textContent = userData.expiryDate;
+
+          // Check if the pass is active or expired
+          const isActive = new Date(userData.expiryDate) > new Date();
+          document.getElementById('status').textContent = isActive ? 'Active' : 'Expired';
+
+          profilePhoto.src = userData.profilePicture || 'https://via.placeholder.com/100';
+          userDetails.classList.remove('hidden');
+
+          // Show/hide recharge section and active pass message
+          if (isActive) {
+            activePassMessage.classList.remove('hidden');
+            rechargeSection.classList.add('hidden');
+          } else {
+            activePassMessage.classList.add('hidden');
+            rechargeSection.classList.remove('hidden');
+          }
+        } else {
+          alert('User not found!');
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    });
+
+    // Recharge Button
+    rechargeButton.addEventListener('click', () => {
+      const plan = document.getElementById('plan').value;
+      const planMonths = parseInt(plan) / 300; // Convert plan value to months (300 = 1 month)
+
+      const options = {
+        key: 'rzp_test_3WgTq9ybOpe62Y', // Replace with your Razorpay key
+        amount: plan * 100, // Amount in paise
+        currency: 'INR',
+        name: 'Bus Pass Recharge',
+        description: 'Recharge your bus pass',
+        handler: async function (response) {
+          // Calculate new expiry date from today
+          const currentDate = new Date();
+          const newExpiryDate = new Date(currentDate);
+          newExpiryDate.setMonth(currentDate.getMonth() + planMonths);
+
+          // Update expiry date in Firebase
+          await update(ref(database, `busPasses/${userForm.uid.value}`), {
+            expiryDate: newExpiryDate.toISOString().split('T')[0] // Format as YYYY-MM-DD
+          });
+
+          // Show payment success message
+          userDetails.classList.add('hidden');
+          paymentSuccess.classList.remove('hidden');
+
+          // Update userData with the new expiry date for the receipt
+          userData.expiryDate = newExpiryDate.toISOString().split('T')[0];
+        },
+        prefill: {
+          name: userData.name,
+          email: userData.email,
+          contact: userData.phone
+        },
+        theme: {
+          color: '#dc3545' // Red
+        }
+      };
+
+      const rzp = new Razorpay(options);
+      rzp.open();
+    });
+
+    // Download Receipt
+    downloadReceipt.addEventListener('click', () => {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      // Add content to PDF
+      doc.setFontSize(18);
+      doc.text("Bus Pass Recharge Receipt", 10, 20);
+      doc.setFontSize(12);
+      doc.text(`Name: ${userData.name}`, 10, 40);
+      doc.text(`Email: ${userData.email}`, 10, 50);
+      doc.text(`Phone: ${userData.phone}`, 10, 60);
+      doc.text(`Route: ${userData.from} to ${userData.to}`, 10, 70);
+      doc.text(`Plan: ${document.getElementById('plan').selectedOptions[0].text}`, 10, 80);
+      doc.text(`New Expiry Date: ${new Date(userData.expiryDate).toLocaleDateString()}`, 10, 90);
+
+      // Add profile photo
+      if (userData.profilePicture) {
+        const img = new Image();
+        img.src = userData.profilePicture;
+        doc.addImage(img, 'JPEG', 10, 100, 50, 50);
+      }
+
+      // Save PDF
+      doc.save("receipt.pdf");
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bus Pass Application</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+    }
+    /* Navbar Styles */
+    .navbar {
+    background-color: #dc3545; /* Red */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: white;
+    }
+
+    .navbar-brand img {
+    border-radius: 5px; /* Optional: Add rounded corners to the logo */
+    }
+
+    .navbar-nav .nav-link {
+    color: white;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+    }
+
+    .navbar-nav .nav-link:hover {
+    color: #f8f9fa; /* Slightly lighter on hover */
+    }
+
+    .navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+    }
+    .form-container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 10px;
+      background: white;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .form-container h2 {
+      color: #dc3545; /* Red */
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .btn-custom {
+      background-color: #dc3545; /* Red */
+      color: white;
+      border: none;
+      transition: background-color 0.3s ease;
+    }
+    .btn-custom:hover {
+      background-color: #c82333; /* Darker Red */
+    }
+    .price-display {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #dc3545; /* Red */
+      text-align: center;
+      margin: 20px 0;
+    }
+    .alert-success {
+      margin-top: 20px;
+      background-color: #74c59c; /* Green */
+      color: white;
+      border: none;
+    }
+    .details-table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+    }
+    .details-table th, .details-table td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    .details-table th {
+      background-color: #5c96cf;
+    }
+    .footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 10px 0;
+      margin-top: 40px;
+    }
+    .footer a {
+      color: #dc3545; /* Red */
+      text-decoration: none;
+    }
+    .footer a:hover {
+      text-decoration: underline;
+    }
+    .logo{
+        width: 50px;
+        height: 50px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <!-- Logo and Brand -->
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img src="http://2.bp.blogspot.com/-5nU72jKeZqc/UaRvvZViyPI/AAAAAAAABrM/TbmXeLuU9do/s1600/APSRTC-Logo.jpg" alt="logo" class="logo me-2">
+        APSRTC Bus Pass
+      </a>
+
+      <!-- Navbar Toggler for Mobile -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Navbar Links -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="card_ver.html">Card verification</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="recharge.html">recharge</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="fetch.html">Test Fetch</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Form Container -->
+  <div class="form-container">
+    <h2>Bus Pass Application</h2>
+    <form id="busPassForm">
+      <!-- Personal Details -->
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="name" class="form-label">Name:</label>
+          <input type="text" class="form-control" id="name" required />
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="age" class="form-label">Age:</label>
+          <input type="number" class="form-control" id="age" required />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="college" class="form-label">College:</label>
+          <input type="text" class="form-control" id="college" required />
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="place" class="form-label">Place:</label>
+          <input type="text" class="form-control" id="place" required />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="dob" class="form-label">Date of Birth:</label>
+          <input type="date" class="form-control" id="dob" required />
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="phone" class="form-label">Phone Number:</label>
+          <input type="tel" class="form-control" id="phone" required />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="email" class="form-label">Email:</label>
+          <input type="email" class="form-control" id="email" required />
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="pincode" class="form-label">Pin Code:</label>
+          <input type="text" class="form-control" id="pincode" required />
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="address" class="form-label">Address:</label>
+        <textarea class="form-control" id="address" required></textarea>
+      </div>
+
+      <!-- Travel Details -->
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="state" class="form-label">State:</label>
+          <input type="text" class="form-control" id="state" value="Andhra Pradesh" readonly />
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="from" class="form-label">From Place:</label>
+          <select class="form-select" id="from" required>
+            <option value="Rajam">Rajam</option>
+            <option value="Salur">Salur</option>
+            <option value="Visakhapatnam">Visakhapatnam</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="to" class="form-label">To Place:</label>
+          <select class="form-select" id="to" required>
+            <option value="Rajam">Rajam</option>
+            <option value="Salur">Salur</option>
+            <option value="Visakhapatnam">Visakhapatnam</option>
+          </select>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="validity" class="form-label">Validity:</label>
+          <select class="form-select" id="validity" required>
+            <option value="1 Month">1 Month</option>
+            <option value="3 Months">3 Months</option>
+            <option value="1 Year">1 Year</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="profilePicture" class="form-label">Profile Picture:</label>
+        <input type="file" class="form-control" id="profilePicture" accept="image/*" required />
+      </div>
+
+      <!-- Price Display -->
+      <div class="price-display">
+        Price: <span id="price">0</span> INR
+      </div>
+
+      <!-- Pay Now Button -->
+      <button type="button" class="btn btn-custom w-100" id="payNow">Pay Now</button>
+    </form>
+
+    <!-- Payment Confirmation -->
+    <div class="alert alert-success d-none" id="confirmationMessage">
+      <h4>Payment Successful!</h4>
+      <table class="details-table">
+        <tr>
+          <th>Field</th>
+          <th>Value</th>
+        </tr>
+        <tr>
+          <td>Name</td>
+          <td id="detailName"></td>
+        </tr>
+        <tr>
+          <td>Age</td>
+          <td id="detailAge"></td>
+        </tr>
+        <tr>
+          <td>College</td>
+          <td id="detailCollege"></td>
+        </tr>
+        <tr>
+          <td>Place</td>
+          <td id="detailPlace"></td>
+        </tr>
+        <tr>
+          <td>Date of Birth</td>
+          <td id="detailDob"></td>
+        </tr>
+        <tr>
+          <td>Phone Number</td>
+          <td id="detailPhone"></td>
+        </tr>
+        <tr>
+          <td>Email</td>
+          <td id="detailEmail"></td>
+        </tr>
+        <tr>
+          <td>Address</td>
+          <td id="detailAddress"></td>
+        </tr>
+        <tr>
+          <td>Pin Code</td>
+          <td id="detailPincode"></td>
+        </tr>
+        <tr>
+          <td>State</td>
+          <td id="detailState"></td>
+        </tr>
+        <tr>
+          <td>From Place</td>
+          <td id="detailFrom"></td>
+        </tr>
+        <tr>
+          <td>To Place</td>
+          <td id="detailTo"></td>
+        </tr>
+        <tr>
+          <td>Validity</td>
+          <td id="detailValidity"></td>
+        </tr>
+        <tr>
+          <td>Expiry Date</td>
+          <td id="detailExpiryDate"></td>
+        </tr>
+        <tr>
+          <td>Price</td>
+          <td id="detailPrice"></td>
+        </tr>
+        <tr>
+          <td>Profile Picture</td>
+          <td><img id="detailProfilePicture" src="" alt="Profile Picture" style="width: 100px; height: auto;"></td>
+        </tr>
+      </table>
+
+      <!-- Download Application Button -->
+      <button type="button" class="btn btn-custom w-100 mt-3" id="downloadApplication">Download Application</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2023 APSRTC. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+   <!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+  <script type="module">
+    // Firebase App and Database imports
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA02GfjPGm1X8He9bLkrfkyBKWYgmMc98Q",
+      authDomain: "buspass-2025.firebaseapp.com",
+      projectId: "buspass-2025",
+      storageBucket: "buspass-2025.appspot.com",
+      messagingSenderId: "417197327685",
+      appId: "1:417197327685:web:42d2d9e773512f7ba1ea2c",
+      measurementId: "G-475C145WWK"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+
+    const fromPlace = document.getElementById("from");
+    const toPlace = document.getElementById("to");
+    const validity = document.getElementById("validity");
+    const priceElement = document.getElementById("price");
+
+    function calculatePrice() {
+      const from = fromPlace.value;
+      const to = toPlace.value;
+      const validityValue = validity.value;
+
+      let price = 0;
+
+      if (from === "Rajam" && to === "Salur") {
+        if (validityValue === "1 Month") price = 300;
+        else if (validityValue === "3 Months") price = 800;
+        else if (validityValue === "1 Year") price = 1350;
+      } else if (from === "Visakhapatnam" && to === "Visakhapatnam") {
+        if (validityValue === "1 Month") price = 250;
+        else if (validityValue === "3 Months") price = 700;
+        else if (validityValue === "1 Year") price = 1200;
+      } else {
+        price = 500; // Default price
+      }
+
+      priceElement.textContent = price;
+    }
+
+    function calculateExpiryDate(validityValue) {
+      const currentDate = new Date();
+      let expiryDate = new Date(currentDate);
+
+      if (validityValue === "1 Month") {
+        expiryDate.setMonth(currentDate.getMonth() + 1);
+      } else if (validityValue === "3 Months") {
+        expiryDate.setMonth(currentDate.getMonth() + 3);
+      } else if (validityValue === "1 Year") {
+        expiryDate.setFullYear(currentDate.getFullYear() + 1);
+      }
+
+      return expiryDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+    }
+
+    fromPlace.addEventListener("change", calculatePrice);
+    toPlace.addEventListener("change", calculatePrice);
+    validity.addEventListener("change", calculatePrice);
+
+    document.getElementById("payNow").addEventListener("click", () => {
+      // Form data collection and payment logic
+      const name = document.getElementById("name").value;
+      const age = document.getElementById("age").value;
+      const college = document.getElementById("college").value;
+      const place = document.getElementById("place").value;
+      const dob = document.getElementById("dob").value;
+      const phone = document.getElementById("phone").value;
+      const email = document.getElementById("email").value;
+      const address = document.getElementById("address").value;
+      const pincode = document.getElementById("pincode").value;
+      const state = document.getElementById("state").value;
+      const from = fromPlace.value;
+      const to = toPlace.value;
+      const validityValue = validity.value;
+      const price = priceElement.textContent;
+      const profilePicture = document.getElementById("profilePicture").files[0];
+      const expiryDate = calculateExpiryDate(validityValue);
+
+      // Convert profile picture to Base64
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const profilePictureBase64 = e.target.result; // Base64 string
+
+        const options = {
+          key: "rzp_test_3WgTq9ybOpe62Y",
+          amount: price * 100,
+          currency: "INR",
+          name: "APSRTC",
+          description: "Bus Pass Payment",
+          handler: function (response) {
+            const studentDetails = {
+              name,
+              age,
+              college,
+              place,
+              dob,
+              phone,
+              email,
+              address,
+              pincode,
+              state,
+              from,
+              to,
+              validity: validityValue,
+              expiryDate,
+              price,
+              profilePicture: profilePictureBase64, // Save Base64 string
+              paymentId: response.razorpay_payment_id
+            };
+
+            // Save data to Firebase using phone number as key
+            set(ref(database, '/busPasses/' + phone), studentDetails)
+              .then(() => {
+                const confirmationMessage = document.getElementById("confirmationMessage");
+                confirmationMessage.classList.remove("d-none");
+
+                document.getElementById("detailName").textContent = name;
+                document.getElementById("detailAge").textContent = age;
+                document.getElementById("detailCollege").textContent = college;
+                document.getElementById("detailPlace").textContent = place;
+                document.getElementById("detailDob").textContent = dob;
+                document.getElementById("detailPhone").textContent = phone;
+                document.getElementById("detailEmail").textContent = email;
+                document.getElementById("detailAddress").textContent = address;
+                document.getElementById("detailPincode").textContent = pincode;
+                document.getElementById("detailState").textContent = state;
+                document.getElementById("detailFrom").textContent = from;
+                document.getElementById("detailTo").textContent = to;
+                document.getElementById("detailValidity").textContent = validityValue;
+                document.getElementById("detailExpiryDate").textContent = expiryDate;
+                document.getElementById("detailPrice").textContent = price;
+
+                // Display profile picture
+                document.getElementById("detailProfilePicture").src = profilePictureBase64;
+              })
+              .catch(err => console.error(err));
+          }
+        };
+
+        // Ensure Razorpay is defined
+        if (typeof Razorpay === "undefined") {
+          console.error("Razorpay is not loaded.");
+          return;
+        }
+
+        const razorpay = new Razorpay(options);
+        razorpay.open();
+      };
+
+      reader.readAsDataURL(profilePicture); // Read the file as Data URL (Base64)
+    });
+
+    document.getElementById("downloadApplication").addEventListener("click", () => {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      const name = document.getElementById("detailName").textContent;
+      const age = document.getElementById("detailAge").textContent;
+      const college = document.getElementById("detailCollege").textContent;
+      const place = document.getElementById("detailPlace").textContent;
+      const dob = document.getElementById("detailDob").textContent;
+      const phone = document.getElementById("detailPhone").textContent;
+      const email = document.getElementById("detailEmail").textContent;
+      const address = document.getElementById("detailAddress").textContent;
+      const pincode = document.getElementById("detailPincode").textContent;
+      const state = document.getElementById("detailState").textContent;
+      const from = document.getElementById("detailFrom").textContent;
+      const to = document.getElementById("detailTo").textContent;
+      const validityValue = document.getElementById("detailValidity").textContent;
+      const expiryDate = document.getElementById("detailExpiryDate").textContent;
+      const price = document.getElementById("detailPrice").textContent;
+      const profilePicture = document.getElementById("detailProfilePicture").src;
+
+      // Add table to PDF
+      doc.autoTable({
+        head: [['Field', 'Value']],
+        body: [
+          ['Name', name],
+          ['Age', age],
+          ['College', college],
+          ['Place', place],
+          ['Date of Birth', dob],
+          ['Phone Number', phone],
+          ['Email', email],
+          ['Address', address],
+          ['Pin Code', pincode],
+          ['State', state],
+          ['From Place', from],
+          ['To Place', to],
+          ['Validity', validityValue],
+          ['Expiry Date', expiryDate],
+          ['Price', price + ' INR'],
+        ],
+        startY: 20,
+      });
+
+      // Add profile picture to PDF
+      doc.addImage(profilePicture, 'JPEG', 10, doc.autoTable.previous.finalY + 10, 50, 50);
+
+      // Add declaration
+      doc.setFontSize(12);
+      doc.text("Declaration:", 10, doc.autoTable.previous.finalY + 70);
+      doc.text("I hereby declare that the particulars given above are true and found correct.", 10, doc.autoTable.previous.finalY + 80);
+      doc.text("I will abide by the rules & regulations of APSRTC governing issue of Bus Passes.", 10, doc.autoTable.previous.finalY + 90);
+
+      // Add space for signatures
+      doc.text("Student Signature: ________________________", 10, doc.autoTable.previous.finalY + 110);
+      doc.text("College HOD Signature: ________________________", 10, doc.autoTable.previous.finalY + 120);
+
+      // Save PDF
+      doc.save("BusPassApplication.pdf");
+    });
+  </script>
+</body>
+</html>

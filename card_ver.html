@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Card Verification</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Arial', sans-serif;
+    }
+    .navbar {
+      background-color: #dc3545; /* Red */
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .navbar-brand, .navbar-nav .nav-link {
+      color: #fff !important;
+    }
+    .navbar-brand:hover, .navbar-nav .nav-link:hover {
+      color: #ffc107 !important; /* Yellow hover effect */
+    }
+    .container {
+      max-width: 800px;
+      margin-top: 50px;
+    }
+    .card {
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .table th, .table td {
+      vertical-align: middle;
+    }
+    .alert {
+      margin-top: 20px;
+    }
+    .profile-picture {
+      max-width: 150px;
+      border-radius: 10px;
+    }
+    .fraud-error {
+      animation: shake 0.5s ease-in-out infinite;
+    }
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
+      100% { transform: translateX(0); }
+    }
+    footer {
+      background-color: #343a40; /* Dark gray */
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 50px;
+    }
+    footer a {
+      color: #dc3545; /* Red */
+      text-decoration: none;
+    }
+    footer a:hover {
+      color: #ffc107; /* Yellow hover effect */
+    }
+
+    /* Custom styling for profile picture and layout */
+    .profile-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .profile-container .profile-picture {
+      margin-right: 20px;
+    }
+    .from-to-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .from-to-row div {
+      background-color: #dc3545; /* Red */
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      width: 48%;
+      text-align: center;
+    }
+    .logo{
+        width: 50px;
+        height: 50px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <!-- Logo and Brand -->
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img src="http://2.bp.blogspot.com/-5nU72jKeZqc/UaRvvZViyPI/AAAAAAAABrM/TbmXeLuU9do/s1600/APSRTC-Logo.jpg" alt="logo" class="logo me-2">
+        APSRTC Bus Pass
+      </a>
+
+      <!-- Navbar Toggler for Mobile -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Navbar Links -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="card_ver.html">Card verification</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="recharge.html">recharge</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="fetch.html">Test Fetch</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container">
+    <h1 class="text-center mb-4">Pass Verification System</h1>
+    <div class="card p-4 shadow">
+      <div class="mb-3">
+        <label for="phoneInput" class="form-label">Enter Student Phone Number:</label>
+        <input type="text" class="form-control" id="phoneInput" placeholder="Enter phone number">
+      </div>
+      <button id="verifyButton" class="btn btn-danger w-100">Verify Pass</button>
+    </div>
+
+    <!-- Details Section -->
+    <div id="detailsSection" class="mt-4 d-none">
+      <h2 class="text-center mb-4">Student Details</h2>
+      
+      <!-- Profile and Pass Status -->
+      <div class="profile-container">
+        <img id="profilePicture" src="" alt="Profile Picture" class="profile-picture">
+        <div>
+          <div id="passStatus" class="alert"></div>
+          <div class="from-to-row">
+            <div><strong>From:</strong> <span id="fromField"></span></div>
+            <div><strong>To:</strong> <span id="toField"></span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Details Table -->
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody id="detailsTable">
+            <!-- Details will be populated here -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Block Pass Button -->
+      <button id="blockPassButton" class="btn btn-dark w-100 mt-4">Block Pass</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 APSRTC. All rights reserved.</p>
+    <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+  </footer>
+
+  <!-- Fraud Error Modal -->
+  <div class="modal fade" id="fraudErrorModal" tabindex="-1" aria-labelledby="fraudErrorModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="fraudErrorModalLabel">Fraud Alert</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Your pass has a fraud report. Please contact the nearby APSRTC BUS DEPOT.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase and Bootstrap JS -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
+    import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA02GfjPGm1X8He9bLkrfkyBKWYgmMc98Q",
+      authDomain: "buspass-2025.firebaseapp.com",
+      projectId: "buspass-2025",
+      storageBucket: "buspass-2025.appspot.com",
+      messagingSenderId: "417197327685",
+      appId: "1:417197327685:web:42d2d9e773512f7ba1ea2c",
+      measurementId: "G-475C145WWK"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+
+    const phoneInput = document.getElementById("phoneInput");
+    const verifyButton = document.getElementById("verifyButton");
+    const detailsSection = document.getElementById("detailsSection");
+    const detailsTable = document.getElementById("detailsTable");
+    const profilePicture = document.getElementById("profilePicture");
+    const passStatus = document.getElementById("passStatus");
+    const blockPassButton = document.getElementById("blockPassButton");
+    const fromField = document.getElementById("fromField");
+    const toField = document.getElementById("toField");
+
+    const fraudErrorModal = new bootstrap.Modal(document.getElementById('fraudErrorModal'));
+
+    let currentPhone = "";
+
+    verifyButton.addEventListener("click", async () => {
+      const phone = phoneInput.value.trim();
+      if (!phone) {
+        alert("Please enter a valid phone number.");
+        return;
+      }
+
+      currentPhone = phone;
+
+      const studentRef = ref(database, `/busPasses/${phone}`);
+      const snapshot = await get(studentRef);
+
+      if (snapshot.exists()) {
+        const studentData = snapshot.val();
+
+        // Debugging: Log fraud status
+        console.log("Fraud Status: ", studentData.fraud);
+
+        // Check fraud status
+        if (studentData.fraud === "yes") {
+          // Show fraud error in the modal
+          fraudErrorModal.show();
+          detailsSection.classList.add("d-none"); // Hide details section
+          return; // Stop further execution if fraud is detected
+        }
+
+        // Display details
+        detailsTable.innerHTML = `
+          <tr><td>Name</td><td>${studentData.name}</td></tr>
+          <tr><td>Age</td><td>${studentData.age}</td></tr>
+          <tr><td>Expiry Date</td><td><p style="color:red; font-weight: bolder;">${studentData.expiryDate}</p></td></tr>
+          <tr><td>College</td><td>${studentData.college}</td></tr>
+          <tr><td>Place</td><td>${studentData.place}</td></tr>
+          <tr><td>Date of Birth</td><td>${studentData.dob}</td></tr>
+          <tr><td>Phone</td><td>${studentData.phone}</td></tr>
+          <tr><td>Email</td><td>${studentData.email}</td></tr>
+          <tr><td>Address</td><td>${studentData.address}</td></tr>
+          <tr><td>Pincode</td><td>${studentData.pincode}</td></tr>
+          <tr><td>State</td><td>${studentData.state}</td></tr>
+          <tr><td>Validity</td><td>${studentData.validity}</td></tr>
+          <tr><td>Price</td><td>${studentData.price} INR</td></tr>
+        `;
+
+        // Display profile picture
+        profilePicture.src = studentData.profilePicture;
+
+        // Set From and To values
+        fromField.innerHTML = studentData.from;
+        toField.innerHTML = studentData.to;
+
+        // Check expiry date
+        const currentDate = new Date();
+        const expiryDate = new Date(studentData.expiryDate);
+
+        if (expiryDate < currentDate) {
+          passStatus.innerHTML = `<div class="alert alert-danger">Pass Expired!</div>`;
+        } else {
+          passStatus.innerHTML = `<div class="alert alert-success">Pass Verified Successfully!</div>`;
+        }
+
+        // Show details section
+        detailsSection.classList.remove("d-none");
+      } else {
+        alert("No student found with this phone number.");
+        detailsSection.classList.add("d-none");
+      }
+    });
+
+    // Block pass button click event
+    blockPassButton.addEventListener("click", async () => {
+      const studentRef = ref(database, `/busPasses/${currentPhone}`);
+      const snapshot = await get(studentRef);
+
+      if (snapshot.exists()) {
+        const studentData = snapshot.val();
+
+        // Update fraud status to "yes"
+        await update(studentRef, {
+          fraud: "yes"
+        });
+
+        // Show success message
+        alert("Pass has been blocked successfully.");
+        detailsSection.classList.add("d-none");
+      } else {
+        alert("Student not found.");
+      }
+    });
+  </script>
+
+  <!-- Bootstrap JS (necessary for modal) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Real-Time GPS Tracking</title>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7KJAcqW_f-Ujhas8kb-T3M8SVCxwoNNM"></script>
+  <style>
+    #map {
+      height: 500px;
+      width: 100%;
+      margin-top: 20px;
+    }
+    input, button {
+      margin: 10px;
+      padding: 8px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Real-Time GPS Tracking</h1>
+  <input type="text" id="deviceIdInput" placeholder="Enter Device ID">
+  <button onclick="fetchLocation()">Track Device</button>
+  <div id="map"></div>
+
+  <script>
+    // Initialize Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyD2c9iKNugatxDSAA8jmqczQVDDpYdoskw",
+      authDomain: "gps-apsrtc.firebaseapp.com",
+      databaseURL: "https://gps-apsrtc-default-rtdb.firebaseio.com",
+      projectId: "gps-apsrtc",
+      storageBucket: "gps-apsrtc.firebasestorage.app",
+      messagingSenderId: "721235309516",
+      appId: "1:721235309516:web:ae8dae15b0f581ca4ca369",
+      measurementId: "G-BFZHHMGTGP"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    const database = firebase.database();
+    let map, marker;
+
+    function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: 0, lng: 0 },
+        zoom: 15
+      });
+
+      marker = new google.maps.Marker({
+        position: { lat: 0, lng: 0 },
+        map: map
+      });
+    }
+
+    function fetchLocation() {
+      const deviceId = document.getElementById("deviceIdInput").value.trim();
+      if (deviceId === "") {
+        alert("Please enter a valid Device ID!");
+        return;
+      }
+
+      const deviceRef = database.ref(`/gps_data/${deviceId}`);
+      deviceRef.on("value", (snapshot) => {
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          const latitude = data.latitude;
+          const longitude = data.longitude;
+
+          if (latitude && longitude) {
+            const newPos = new google.maps.LatLng(latitude, longitude);
+            marker.setPosition(newPos);
+            map.setCenter(newPos);
+          } else {
+            alert("Location data not available for this Device ID.");
+          }
+        } else {
+          alert("Device ID not found in database!");
+        }
+      });
+    }
+
+    window.onload = initMap;
+  </script>
+</body>
+</html>
