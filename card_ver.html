@@ -11,6 +11,9 @@
     body {
       background-color: #f8f9fa;
       font-family: 'Arial', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
     .navbar {
       background-color: #dc3545; /* Red */
@@ -23,8 +26,21 @@
       color: #ffc107 !important; /* Yellow hover effect */
     }
     .container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+    .form-container {
+      background: #fff;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      width: 100%;
       max-width: 800px;
-      margin-top: 50px;
     }
     .card {
       border: none;
@@ -56,7 +72,7 @@
       color: white;
       text-align: center;
       padding: 20px;
-      margin-top: 50px;
+      margin-top: auto;
     }
     footer a {
       color: #dc3545; /* Red */
@@ -88,9 +104,9 @@
       width: 48%;
       text-align: center;
     }
-    .logo{
-        width: 50px;
-        height: 50px;
+    .logo {
+      width: 50px;
+      height: 50px;
     }
   </style>
 </head>
@@ -98,7 +114,7 @@
 
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container">
+    <div class="container-fluid">
       <!-- Logo and Brand -->
       <a class="navbar-brand d-flex align-items-center" href="#">
         <img src="http://2.bp.blogspot.com/-5nU72jKeZqc/UaRvvZViyPI/AAAAAAAABrM/TbmXeLuU9do/s1600/APSRTC-Logo.jpg" alt="logo" class="logo me-2">
@@ -120,7 +136,7 @@
             <a class="nav-link" href="card_ver.html">Card verification</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="recharge.html">recharge</a>
+            <a class="nav-link" href="recharge.html">Recharge</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="fetch.html">Test Fetch</a>
@@ -132,48 +148,50 @@
 
   <!-- Main Content -->
   <div class="container">
-    <h1 class="text-center mb-4">Pass Verification System</h1>
-    <div class="card p-4 shadow">
-      <div class="mb-3">
-        <label for="phoneInput" class="form-label">Enter Student Phone Number:</label>
-        <input type="text" class="form-control" id="phoneInput" placeholder="Enter phone number">
+    <div class="form-container">
+      <h1 class="text-center mb-4">Pass Verification System</h1>
+      <div class="card p-4 shadow">
+        <div class="mb-3">
+          <label for="phoneInput" class="form-label">Enter Student Phone Number:</label>
+          <input type="text" class="form-control" id="phoneInput" placeholder="Enter phone number">
+        </div>
+        <button id="verifyButton" class="btn btn-danger w-100">Verify Pass</button>
       </div>
-      <button id="verifyButton" class="btn btn-danger w-100">Verify Pass</button>
-    </div>
 
-    <!-- Details Section -->
-    <div id="detailsSection" class="mt-4 d-none">
-      <h2 class="text-center mb-4">Student Details</h2>
-      
-      <!-- Profile and Pass Status -->
-      <div class="profile-container">
-        <img id="profilePicture" src="" alt="Profile Picture" class="profile-picture">
-        <div>
-          <div id="passStatus" class="alert"></div>
-          <div class="from-to-row">
-            <div><strong>From:</strong> <span id="fromField"></span></div>
-            <div><strong>To:</strong> <span id="toField"></span></div>
+      <!-- Details Section -->
+      <div id="detailsSection" class="mt-4 d-none">
+        <h2 class="text-center mb-4">Student Details</h2>
+        
+        <!-- Profile and Pass Status -->
+        <div class="profile-container">
+          <img id="profilePicture" src="" alt="Profile Picture" class="profile-picture">
+          <div>
+            <div id="passStatus" class="alert"></div>
+            <div class="from-to-row">
+              <div><strong>From:</strong> <span id="fromField"></span></div>
+              <div><strong>To:</strong> <span id="toField"></span></div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Details Table -->
-      <div class="table-responsive">
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th>Field</th>
-              <th>Details</th>
-            </tr>
-          </thead>
-          <tbody id="detailsTable">
-            <!-- Details will be populated here -->
-          </tbody>
-        </table>
-      </div>
+        <!-- Details Table -->
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Field</th>
+                <th>Details</th>
+              </tr>
+            </thead>
+            <tbody id="detailsTable">
+              <!-- Details will be populated here -->
+            </tbody>
+          </table>
+        </div>
 
-      <!-- Block Pass Button -->
-      <button id="blockPassButton" class="btn btn-dark w-100 mt-4">Block Pass</button>
+        <!-- Block Pass Button -->
+        <button id="blockPassButton" class="btn btn-dark w-100 mt-4">Block Pass</button>
+      </div>
     </div>
   </div>
 

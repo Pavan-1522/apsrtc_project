@@ -12,45 +12,52 @@
       background: #f8f9fa;
       color: #333;
       font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
     .navbar {
-    background-color: #dc3545; /* Red */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      background-color: #dc3545; /* Red */
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
-
     .navbar-brand {
-    font-weight: bold;
-    font-size: 1.5rem;
-    color: white;
+      font-weight: bold;
+      font-size: 1.5rem;
+      color: white;
     }
-
     .navbar-brand img {
-    border-radius: 5px; /* Optional: Add rounded corners to the logo */
+      border-radius: 5px;
     }
-
     .navbar-nav .nav-link {
-    color: rgb(3, 2, 2);
-    font-size: 1rem;
-    transition: color 0.3s ease;
+      color: rgb(3, 2, 2);
+      font-size: 1rem;
+      transition: color 0.3s ease;
     }
-
     .navbar-nav .nav-link:hover {
-    color: #ffffff; /* Slightly lighter on hover */
+      color: #ffffff;
     }
-
     .navbar-toggler {
-    border-color: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.1);
     }
-
     .navbar-toggler-icon {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
     }
     .container {
-      margin-top: 5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+    .form-container {
       background: #fff;
       border-radius: 15px;
       padding: 2rem;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 800px;
     }
     .btn-primary {
       background: #dc3545; /* Red */
@@ -69,6 +76,7 @@
       border-radius: 10px;
       color: #333;
       margin-bottom: 1rem;
+      width: 100%;
     }
     .card-body {
       padding: 1.5rem;
@@ -92,6 +100,8 @@
       height: 100px;
       border-radius: 50%;
       object-fit: cover;
+      margin: 0 auto 1rem;
+      display: block;
     }
     .active-pass-message {
       background: #f8d7da; /* Light Red */
@@ -106,7 +116,7 @@
       color: #fff;
       padding: 1rem 0;
       text-align: center;
-      margin-top: 3rem;
+      margin-top: auto;
     }
     .footer a {
       color: #dc3545; /* Red */
@@ -115,16 +125,19 @@
     .footer a:hover {
       color: #c82333; /* Darker Red */
     }
-    .logo{
-        width: 50px;
-        height: 50px;
+    .logo {
+      width: 50px;
+      height: 50px;
+    }
+    .text-center {
+      text-align: center;
     }
   </style>
 </head>
 <body>
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container">
+    <div class="container-fluid">
       <!-- Logo and Brand -->
       <a class="navbar-brand d-flex align-items-center" href="#">
         <img src="http://2.bp.blogspot.com/-5nU72jKeZqc/UaRvvZViyPI/AAAAAAAABrM/TbmXeLuU9do/s1600/APSRTC-Logo.jpg" alt="logo" class="logo me-2">
@@ -146,7 +159,7 @@
             <a class="nav-link" href="card_ver.html">Card verification</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="recharge.html">recharge</a>
+            <a class="nav-link" href="recharge.html">Recharge</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="fetch.html">Test Fetch</a>
@@ -158,61 +171,63 @@
 
   <!-- Main Content -->
   <div class="container">
-    <div class="text-center mb-4">
-      <h1 class="display-4">🚌 Bus Pass Recharge</h1>
-      <p class="lead">Recharge your bus pass seamlessly and securely.</p>
-    </div>
-
-    <!-- User Form -->
-    <form id="userForm" class="mb-4">
-      <div class="mb-3">
-        <label for="uid" class="form-label">Enter UID:</label>
-        <input type="text" class="form-control" id="uid" placeholder="Enter your UID" required>
+    <div class="form-container">
+      <div class="text-center mb-4">
+        <h1 class="display-4">🚌 Bus Pass Recharge</h1>
+        <p class="lead">Recharge your bus pass seamlessly and securely.</p>
       </div>
-      <button type="submit" class="btn btn-primary w-100">Get Details</button>
-    </form>
 
-    <!-- User Details -->
-    <div id="userDetails" class="hidden">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">User Details</h5>
-          <img id="profilePhoto" src="" alt="Profile Photo" class="profile-photo mb-3">
-          <p><strong>Name:</strong> <span id="name"></span></p>
-          <p><strong>Email:</strong> <span id="email"></span></p>
-          <p><strong>Phone:</strong> <span id="phone"></span></p>
-          <p><strong>Route:</strong> <span id="route"></span></p>
-          <p><strong>Expiry Date:</strong> <span id="expiryDate"></span></p>
-          <p><strong>Status:</strong> <span id="status"></span></p>
+      <!-- User Form -->
+      <form id="userForm" class="mb-4">
+        <div class="mb-3">
+          <label for="uid" class="form-label">Enter UID:</label>
+          <input type="text" class="form-control" id="uid" placeholder="Enter your UID" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Get Details</button>
+      </form>
+
+      <!-- User Details -->
+      <div id="userDetails" class="hidden">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="card-title">User Details</h5>
+            <img id="profilePhoto" src="" alt="Profile Photo" class="profile-photo mb-3">
+            <p><strong>Name:</strong> <span id="name"></span></p>
+            <p><strong>Email:</strong> <span id="email"></span></p>
+            <p><strong>Phone:</strong> <span id="phone"></span></p>
+            <p><strong>Route:</strong> <span id="route"></span></p>
+            <p><strong>Expiry Date:</strong> <span id="expiryDate"></span></p>
+            <p><strong>Status:</strong> <span id="status"></span></p>
+          </div>
+        </div>
+
+        <!-- Active Pass Message -->
+        <div id="activePassMessage" class="active-pass-message hidden">
+          <p>Your pass is already <strong>Active</strong>. Recharge is not required at this time.</p>
+        </div>
+
+        <!-- Recharge Section -->
+        <div id="rechargeSection" class="card hidden">
+          <div class="card-body">
+            <h5 class="card-title">Select Plan</h5>
+            <select id="plan" class="form-select mb-3">
+              <option value="300">1 Month - ₹300</option>
+              <option value="900">3 Months - ₹900</option>
+              <option value="1800">6 Months - ₹1800</option>
+            </select>
+            <button id="rechargeButton" class="btn btn-primary w-100">Recharge Now</button>
+          </div>
         </div>
       </div>
 
-      <!-- Active Pass Message -->
-      <div id="activePassMessage" class="active-pass-message hidden">
-        <p>Your pass is already <strong>Active</strong>. Recharge is not required at this time.</p>
-      </div>
-
-      <!-- Recharge Section -->
-      <div id="rechargeSection" class="card hidden">
-        <div class="card-body">
-          <h5 class="card-title">Select Plan</h5>
-          <select id="plan" class="form-select mb-3">
-            <option value="300">1 Month - ₹300</option>
-            <option value="900">3 Months - ₹900</option>
-            <option value="1800">6 Months - ₹1800</option>
-          </select>
-          <button id="rechargeButton" class="btn btn-primary w-100">Recharge Now</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Payment Success -->
-    <div id="paymentSuccess" class="hidden text-center">
-      <div class="card">
-        <div class="card-body">
-          <h2 class="card-title">🎉 Payment Successful!</h2>
-          <p>Your pass has been recharged. Download the receipt below.</p>
-          <button id="downloadReceipt" class="btn btn-primary">Download Receipt</button>
+      <!-- Payment Success -->
+      <div id="paymentSuccess" class="hidden text-center">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title">🎉 Payment Successful!</h2>
+            <p>Your pass has been recharged. Download the receipt below.</p>
+            <button id="downloadReceipt" class="btn btn-primary">Download Receipt</button>
+          </div>
         </div>
       </div>
     </div>
